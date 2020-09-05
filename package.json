@@ -99,7 +99,8 @@
     "coverage": "jest --collect-coverage",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
     "test": "jest",
-    "watch": "tsc -w --resolveJsonModule"
+    "watch": "tsc -w --resolveJsonModule",
+    "prepare": "npm run build"
   },
   "version": "1.0.9"
 }
