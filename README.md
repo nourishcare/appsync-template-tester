@@ -47,7 +47,14 @@ test('Test the resolver', () => {
 This module supports all the provided core & time \$util methods, and most of the dynamodb methods. The underlying methods can be seen in the [Resolver Mapping Template Utility Reference
 docs](https://docs.aws.amazon.com/appsync/latest/devguide/resolver-util-reference.html).
 
-Note: The errors list is also not returned (but \$util.error will throw an error).
+> Note: The errors list is also not returned (but \$util.error will throw an error).
+
+Support for the `#return` directive is also added (see [Pipeline Resolvers](https://docs.aws.amazon.com/appsync/latest/devguide/pipeline-resolvers.html) for how to use this directive)
+is also added.
+
+> Note: The actual `#return` directive will ignore any prior output but in this package the prior output will still be returned.
+> It is suggested that you only do output at the end of your resolvers, in general this makes the resolvers easier to read, and
+> will also mean that this limitation of the implementation of `#return` here will not matter.
 
 ## Contributors
 
