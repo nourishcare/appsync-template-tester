@@ -1,9 +1,6 @@
 # appsync-template-tester
 
-[![Built with
-typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://www.typescriptlang.org/)
-[![version](https://badgen.net/npm/v/appsync-template-tester)](https://www.npmjs.com/package/appsync-template-tester)
-![dependants](https://badgen.net/npm/dependents/appsync-template-tester) ![license](https://badgen.net/npm/license/appsync-template-tester)
+![license](https://badgen.net/npm/license/appsync-template-tester)
 
 Unit test AppSync VTL resolvers, with popular frameworks such as Jest.
 
@@ -52,6 +49,8 @@ docs](https://docs.aws.amazon.com/appsync/latest/devguide/resolver-util-referenc
 
 Note: The errors list is also not returned (but \$util.error will throw an error).
 
-## Built by Skyhook
+## Contributors
 
-This module is contributed by the team at [Skyhook](https://www.skyhookadventure.com/).
+[Original package](https://www.npmjs.com/package/appsync-template-tester) contributed by the team at [Skyhook](https://www.skyhookadventure.com/).
+
+[This fork](https://github.com/CarePlanner/appsync-template-tester) maintained by [CarePlanner](https://www.care-planner.co.uk/).
