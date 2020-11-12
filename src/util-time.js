@@ -29,12 +29,12 @@ function nowFormatted(format, timezone = 'utc') {
     return moment_timezone_1.default().tz(timezone).format(vtlFormatConverted);
 }
 exports.nowFormatted = nowFormatted;
-function parseFormattedToEpochMilliSecond(time, formatFrom, timezone = 'utc') {
+function parseFormattedToEpochMilliSeconds(time, formatFrom, timezone = 'utc') {
     const reverseFormat = vtlToMomentFormat(formatFrom);
     // AppSync does not parse in strict mode
     return moment_timezone_1.default(time, reverseFormat).tz(timezone).valueOf();
 }
-exports.parseFormattedToEpochMilliSecond = parseFormattedToEpochMilliSecond;
+exports.parseFormattedToEpochMilliSeconds = parseFormattedToEpochMilliSeconds;
 function parseISO8601ToEpochMilliSeconds(time) {
     // AppSync does not parse in strict mode
     return moment_timezone_1.default(time, 'YYYY-MM-DDTHH:mm:ssZ').valueOf();
