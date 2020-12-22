@@ -19,7 +19,7 @@ class Parser {
     /**
      * Resolve as a string
      */
-    resolve(context) {
+    resolveAndRender(context, compilerConfig) {
         const clonedContext = JSON.parse(JSON.stringify(context));
         clonedContext.args = clonedContext.arguments;
         const util = {
@@ -33,7 +33,6 @@ class Parser {
             util,
             utils: util,
         };
-
         // Support the return directive added by AppSync. Note that in actual usage AppSync will ignore any previous
         // output in the template and just return the value supplied to the return directive, but this testing
         // framework will still contain the previous output since we essentially take advantage of the stop directive
@@ -41,43 +40,76 @@ class Parser {
         // problem in the template this will do (and doing otherwise would require hacking the AST itself, or worse
         // since the stop directive is implemented in a different manner in velocity.js).
         let macros = {
-            return: function(data) {
+            return: function (data) {
                 //if (typeof data === 'object') {
-                    data = JSON.stringify(data)
+                data = JSON.stringify(data);
                 //}
                 return this.eval(`
 #set($data = ` + data + `)
 $util.toJson($data)
 #stop()
-                `)
+                `);
             }
-        }
-
-        const res = velocityjs_1.render(this.template, params, macros);
+        };
+        const res = velocityjs_1.render(this.template, params, macros, compilerConfig);
+        var result;
         // Remove preceeding and trailing whitespace
         const resWithoutWhitespace = res
             .replace(/^[\n\s\r]*/, '')
             .replace(/[\n\s\r]*$/, '');
         // Typecast Booleans
         if (res === 'false')
-            return false;
-        if (res === 'true')
-            return true;
+            result = false;
+        else if (res === 'true')
+            result = true;
         // Typecase Null
-        if (res === 'null')
-            return null;
-        // Typecase Numbers
+        else if (res === 'null')
+            result = null;
+            // Typecase Numbers
         // eslint-disable-next-line no-restricted-globals
-        if (!isNaN(res))
-            return parseFloat(res);
-        // Typecast JSON to Object
-        try {
-            return JSON.parse(res);
-            // eslint-disable-next-line no-empty
+        else if (!isNaN(res))
+            result = parseFloat(res);
+        else {
+            // Typecast JSON to Object
+            try {
+                result = JSON.parse(res);
+                // eslint-disable-next-line no-empty
+            }
+            catch (e) {
+                result = resWithoutWhitespace
+            }
         }
-        catch (e) { }
-        // Return a string otherwise
-        return resWithoutWhitespace;
+
+        return {
+            'result': result,
+            'context': clonedContext,
+        };
+    }
+
+    /**
+     * Return rendered
+     */
+    resolve(context) {
+        return this.resolveAndRender(context, {}).result;
+    }
+    /**
+     * Return context
+     */
+    resolveAndGetContext(context) {
+        return this.resolveAndRender(context, {}).context;
+    }
+    /**
+     * Get Mapped Values
+     */
+    resolveAndGetMappedValues(context) {
+        const mappedValues = [];
+        this.resolveAndRender(context, {
+            valueMapper: (value) => {
+                mappedValues.push(value);
+                return value;
+            },
+        });
+        return mappedValues;
     }
 }
 exports.default = Parser;
