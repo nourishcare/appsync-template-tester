@@ -27,13 +27,13 @@ describe('parseFormattedToEpochMilliSecond', () => {
     test('time and format', () => {
         const format = 'yyyy-MM-ddTHH:mm:ssZ';
         const time = util_time_1.nowFormatted(format);
-        const res = util_time_1.parseFormattedToEpochMilliSecond(time, format);
+        const res = util_time_1.parseFormattedToEpochMilliSeconds(time, format);
         expect(res.toString().length).toBe(13);
     });
     test('time and format and timezone', () => {
         const format = 'yyyy-MM-ddTHH:mm:ssZ';
         const time = util_time_1.nowFormatted(format);
-        const res = util_time_1.parseFormattedToEpochMilliSecond(time, format, 'Australia/Perth');
+        const res = util_time_1.parseFormattedToEpochMilliSeconds(time, format, 'Australia/Perth');
         expect(res.toString().length).toBe(13);
     });
 });
